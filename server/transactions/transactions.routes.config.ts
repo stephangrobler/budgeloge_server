@@ -1,5 +1,6 @@
 import express from "express";
 import { CommonRoutesConfig } from "../common/common.routes.config";
+import transactionsController from "./controllers/transactions.controller";
 
 export class TransactionRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
@@ -8,11 +9,13 @@ export class TransactionRoutes extends CommonRoutesConfig {
 
   configureRoutes() {
     this.app
-      .route("transactions")
-      .get((req: express.Request, res: express.Response) => {})
-      .post((req: express.Request, res: express.Response) => {
-        res.status(200).send(`Post to transactions`);
-      });
+      .route("/transactions")
+      .get(transactionsController.listTransactions)
+      .post(transactionsController.createTransaction);
+
+    this.app
+      .route(`/transactions/:transactionId`)
+      .put(transactionsController.updateTransaction);
 
     return this.app;
   }
