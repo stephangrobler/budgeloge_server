@@ -13,7 +13,10 @@ export class BudgetRoutes extends CommonRoutesConfig {
       .get(BudgetsController.listBudgets)
       .post(BudgetsController.createBudget);
 
-    this.app.route(`/budgets/:budgetId`).get(BudgetsController.getUserById);
+    this.app
+      .route(`/budgets/:budgetId`)
+      .get(BudgetsController.getUserById)
+      .put(BudgetsController.updateBudget);
     return this.app;
   }
 }

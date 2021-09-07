@@ -9,6 +9,8 @@ import { UsersRoutes } from "./users/users.routes.config";
 import debug from "debug";
 import { TransactionRoutes } from "./transactions/transactions.routes.config";
 import { BudgetRoutes } from "./budgets/budgets.routes.config";
+import { AccountRoutes } from "./accounts/accounts.routes.config";
+import { PayeeRoutes } from "./payees/payees.routes.config";
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -45,6 +47,8 @@ app.use(expressWinston.logger(loggerOptions));
 routes.push(new UsersRoutes(app));
 routes.push(new TransactionRoutes(app));
 routes.push(new BudgetRoutes(app));
+routes.push(new AccountRoutes(app));
+routes.push(new PayeeRoutes(app));
 
 // this is a simple route to make sure everything is working properly
 const runningMessage = `Server running at http://localhost:${port}`;

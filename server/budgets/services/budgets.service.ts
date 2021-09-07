@@ -1,9 +1,10 @@
 import debug from "debug";
+import { CRUD } from "../../common/interfaces/crud.interface";
 import mongooseService from "../../common/services/mongoose.service";
 
 const log: debug.IDebugger = debug("app:budgets-service");
 
-class BudgetService {
+class BudgetService implements CRUD {
   Schema = mongooseService.getMongoose().Schema;
   budgetSchema = new this.Schema({
     name: String,
@@ -31,8 +32,29 @@ class BudgetService {
   }
 
   async getByKey(value: any, key: string = "_id") {
-    return this.Budget.findOne({ [key]: value })
-    .exec();
+    return this.Budget.findOne({ [key]: value }).exec();
+  }
+
+  async getWithQuery(limit: number, page: number) {
+    return this.Budget.find()
+      .limit(limit)
+      .skip(limit * page)
+      .exec();
+  }
+  async update(key: string, resource: any) {
+    log(resource);
+    const existingBudget = await this.Budget.findOneAndUpdate(
+      { _id: key },
+      { $set: resource },
+      { new: true }
+    ).exec();
+    return existingBudget;
+  }
+  async delete(key: string) {
+    return this.Budget.deleteOne({ _id: key }).exec();
+  }
+  async patch(key: string, resource: any) {
+    return this.update(key, resource);
   }
 }
 
