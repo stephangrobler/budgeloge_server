@@ -1,3 +1,8 @@
+import dotenv from "dotenv";
+const dotenvResult = dotenv.config({ path: "./server/.env" });
+if (dotenvResult.error) {
+  throw dotenvResult.error;
+}
 import express from "express";
 import * as http from "http";
 
@@ -12,6 +17,7 @@ import { BudgetRoutes } from "./budgets/budgets.routes.config";
 import { AccountRoutes } from "./accounts/accounts.routes.config";
 import { PayeeRoutes } from "./payees/payees.routes.config";
 import { CategoriesRoutes } from "./categories/categories.routes.config";
+import { AuthRoutes } from "./auth/auth.routes.config";
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -51,6 +57,7 @@ routes.push(new BudgetRoutes(app));
 routes.push(new AccountRoutes(app));
 routes.push(new PayeeRoutes(app));
 routes.push(new CategoriesRoutes(app));
+routes.push(new AuthRoutes(app));
 
 // this is a simple route to make sure everything is working properly
 const runningMessage = `Server running at http://localhost:${port}`;

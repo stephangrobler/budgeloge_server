@@ -6,7 +6,8 @@ const log: debug.IDebugger = debug("app:transactions-controller");
 
 class TransactionsController {
   async listTransactions(req: express.Request, res: express.Response) {
-    const transactions = await transactionsService.getWithQuery(100, 0);
+    const query = req.query;
+    const transactions = await transactionsService.getWithQuery(query, 100, 0);
     res.status(200).send(transactions);
   }
 

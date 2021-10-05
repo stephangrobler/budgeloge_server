@@ -8,14 +8,11 @@ export class AccountRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes() {
-    this.app
-      .route(`/accounts`)
-      .get(accountsController.listAccounts)
-      .post(accountsController.createAccount);
+    this.app.route(`/accounts`).get(accountsController.listAccounts);
 
-    this.app
-      .route(`/accounts/:accountId`)
-      .put(accountsController.updateAccount);
+    this.app.route("/account").post(accountsController.createAccount);
+
+    this.app.route(`/account/:accountId`).put(accountsController.updateAccount);
     return this.app;
   }
 }

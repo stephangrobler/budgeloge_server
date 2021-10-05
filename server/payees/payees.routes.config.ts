@@ -8,13 +8,11 @@ export class PayeeRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes() {
-    this.app
-      .route(`/payees`)
-      .get(PayeeController.listPayees)
-      .post(PayeeController.createPayee);
+    this.app.route(`/payees`).get(PayeeController.listPayees);
+    this.app.post(`/payee`, PayeeController.createPayee);
 
     this.app
-      .route(`/payees/:payeeId`)
+      .route(`/payee/:payeeId`)
       // .get(PayeeController.getPayeeById)
       .put(PayeeController.updatePayee);
     return this.app;

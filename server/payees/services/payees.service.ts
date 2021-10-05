@@ -25,28 +25,28 @@ class PayeeService implements CRUD {
     return this.Payee.findOne({ [key]: value }).exec();
   }
 
-  async add(accountFields: any) {
-    const account = new this.Payee({
-      ...accountFields,
+  async add(payeeFields: any) {
+    const payee = new this.Payee({
+      ...payeeFields,
     });
-    await account.save((err, result) => {
+    await payee.save((err, result) => {
       if (err) throw err;
       log(result);
     });
-    return;
+    return payee;
   }
 
   async update(key: string, resource: any) {
     log(key, resource);
-    const existingAccount = await this.Payee.findOneAndUpdate(
+    const existingPayee = await this.Payee.findOneAndUpdate(
       { _id: key },
       { $set: resource },
       { new: true }
     ).exec();
-    return existingAccount;
+    return existingPayee;
   }
-  getWithQuery(limit: number, page: number) {
-    return this.Payee.find()
+  getWithQuery(query: any, limit: number, page: number) {
+    return this.Payee.find(query)
       .limit(limit)
       .skip(limit * page)
       .exec();

@@ -8,13 +8,11 @@ export class CategoriesRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes() {
+    this.app.route("/categories").get(categoriesController.listCategories);
+    this.app.route("/category").post(categoriesController.createCategory);
     this.app
-      .route("/categories")
-      .get(categoriesController.listCategories)
-      .post(categoriesController.createCategory);
-
-    this.app
-      .route(`/categories/:categoryId`)
+      .route(`/category/:categoryId`)
+      .get(categoriesController.getById)
       .put(categoriesController.updateCategory);
 
     return this.app;

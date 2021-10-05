@@ -14,7 +14,7 @@ export class BudgetRoutes extends CommonRoutesConfig {
       .post(BudgetsController.createBudget);
 
     this.app
-      .route(`/budgets/:budgetId`)
+      .route(`/budget/:budgetId`)
       .get(BudgetsController.getUserById)
       .put(BudgetsController.updateBudget);
     return this.app;

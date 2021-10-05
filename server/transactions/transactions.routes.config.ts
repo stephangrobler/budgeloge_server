@@ -1,6 +1,9 @@
 import express from "express";
+import jwtMiddleware from "../auth/middleware/jwt.middleware";
 import { CommonRoutesConfig } from "../common/common.routes.config";
 import transactionsController from "./controllers/transactions.controller";
+import BodyValidationMiddleware from "../common/middleware/body.validation.middleware";
+import { body } from "express-validator";
 
 export class TransactionRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
@@ -10,8 +13,21 @@ export class TransactionRoutes extends CommonRoutesConfig {
   configureRoutes() {
     this.app
       .route("/transactions")
-      .get(transactionsController.listTransactions)
-      .post(transactionsController.createTransaction);
+      .get(transactionsController.listTransactions);
+
+    this.app.post(
+      `/transaction`,
+      body("payee_id").notEmpty().isString(),
+      body("account_id").notEmpty().isString(),
+      body("category_id").notEmpty().isString(),
+      body("budget_id").notEmpty().isString(),
+      body("amount").notEmpty().isNumeric(),
+      body("cleared").optional().isBoolean(),
+
+      BodyValidationMiddleware.verifyBodyFieldsErrors,
+      jwtMiddleware.validJWTNeeded,
+      transactionsController.createTransaction
+    );
 
     this.app
       .route(`/transactions/:transactionId`)

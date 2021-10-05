@@ -6,7 +6,8 @@ const log: debug.IDebugger = debug("app:budgets-controller");
 
 class BudgetsController {
   async listBudgets(req: express.Request, res: express.Response) {
-    const budgets = await budgetsService.list(100, 0);
+    console.log(req.params, req.body, req.query);
+    const budgets = await budgetsService.getWithQuery(req.query, 100, 0);
     res.status(200).send(budgets);
   }
 

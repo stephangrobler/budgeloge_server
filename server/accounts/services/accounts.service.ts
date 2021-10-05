@@ -33,7 +33,7 @@ class AccountService implements CRUD {
       if (err) throw err;
       log(result);
     });
-    return;
+    return account;
   }
 
   async update(key: string, resource: any) {
@@ -45,8 +45,8 @@ class AccountService implements CRUD {
     ).exec();
     return existingAccount;
   }
-  getWithQuery(limit: number, page: number) {
-    return this.Account.find()
+  getWithQuery(query: any, limit: number, page: number) {
+    return this.Account.find(query)
       .limit(limit)
       .skip(limit * page)
       .exec();

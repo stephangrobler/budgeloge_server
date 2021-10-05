@@ -4,11 +4,13 @@ import mongooseService from "../../common/services/mongoose.service";
 
 const log: debug.IDebugger = debug("app:budgets-service");
 
-class BudgetService implements CRUD {
+class BudgetService {
   Schema = mongooseService.getMongoose().Schema;
   budgetSchema = new this.Schema({
     name: String,
     balance: Number,
+    userId: String,
+    allocations: [],
   });
 
   Budget = mongooseService.getMongoose().model("budgets", this.budgetSchema);
@@ -35,8 +37,8 @@ class BudgetService implements CRUD {
     return this.Budget.findOne({ [key]: value }).exec();
   }
 
-  async getWithQuery(limit: number, page: number) {
-    return this.Budget.find()
+  async getWithQuery(query: any, limit: number, page: number) {
+    return this.Budget.find(query)
       .limit(limit)
       .skip(limit * page)
       .exec();

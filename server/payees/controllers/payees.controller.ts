@@ -6,7 +6,8 @@ const log: debug.IDebugger = debug("app:payees-controller");
 
 class PayeesController {
   async listPayees(req: express.Request, res: express.Response) {
-    const payees = await payeesService.getWithQuery(100, 0);
+    const query = req.query;
+    const payees = await payeesService.getWithQuery(query, 100, 0);
     res.status(200).send(payees);
   }
 

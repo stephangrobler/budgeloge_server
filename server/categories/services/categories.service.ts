@@ -7,12 +7,15 @@ class CategoryService implements CRUD {
   Schema = mongooseService.getMongoose().Schema;
 
   categorySchema = new this.Schema({
-    name: String,
-    amount: Number,
-    budget_id: String,
-    hidden: Boolean,
-    deleted: Boolean,
-    date: Date,
+    name: { type: String, required: true },
+    balance: { type: Number, default: 0 },
+    planned: { type: Number, default: 0 },
+    actual: { type: Number, default: 0 },
+    budget_id: { type: String, required: true },
+    hidden: { type: Boolean, default: false },
+    deleted: { type: Boolean, default: false },
+    date: { type: Date, default: Date.now() },
+    type: String,
   });
 
   Category = mongooseService
@@ -34,11 +37,8 @@ class CategoryService implements CRUD {
     const category = new this.Category({
       ...categoryFields,
     });
-    await category.save((err, result) => {
-      if (err) throw err;
-      log(result);
-    });
-    return;
+    await category.save();
+    return category;
   }
 
   async update(key: string, resource: any) {
@@ -50,8 +50,8 @@ class CategoryService implements CRUD {
     ).exec();
     return existingAccount;
   }
-  getWithQuery(limit: number, page: number) {
-    return this.Category.find()
+  getWithQuery(query: any, limit: number, page: number) {
+    return this.Category.find(query)
       .limit(limit)
       .skip(limit * page)
       .exec();
