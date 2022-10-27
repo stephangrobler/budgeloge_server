@@ -9,12 +9,12 @@ export class BudgetRoutes extends CommonRoutesConfig {
 
   configureRoutes() {
     this.app
-      .route(`/budgets`)
+      .route(`/api/budgets`)
       .get(BudgetsController.listBudgets)
       .post(BudgetsController.createBudget);
 
     this.app
-      .route(`/budget/:budgetId`)
+      .route(`/api/budget/:budgetId`)
       .get(BudgetsController.getUserById)
       .put(BudgetsController.updateBudget);
     return this.app;

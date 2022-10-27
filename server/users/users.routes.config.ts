@@ -10,18 +10,18 @@ export class UsersRoutes extends CommonRoutesConfig {
 
   configureRoutes() {
     this.app
-      .route(`/users`)
+      .route(`/api/users`)
       .get(jwtMiddleware.validJWTNeeded, usersController.listUsers)
       .post(usersController.createUser);
 
     this.app.get(
-      `/users/me`,
+      `/api/users/me`,
       jwtMiddleware.validJWTNeeded,
       usersController.getFromToken
     );
 
     this.app
-      .route(`/users/:userId`)
+      .route(`/api/users/:userId`)
 
       .get(usersController.getById)
       .put(usersController.updateUser)

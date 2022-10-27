@@ -20,6 +20,11 @@ class AccountsController {
     log(await accountsService.update(req.params.accountId, req.body));
     res.status(204).send();
   }
+
+  async getByIdAccount(req: express.Request, res: express.Response) {
+    const account = await accountsService.getByKey(req.params.accountId);
+    res.status(200).send(account);
+  }
 }
 
 export default new AccountsController();
