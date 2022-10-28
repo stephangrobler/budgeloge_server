@@ -12,7 +12,7 @@ export class AuthRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes() {
-    this.app.post("/login", [
+    this.app.post("/api/login", [
       body("email").isEmail(),
       body("password").isString(),
       BodyValidationMiddleware.verifyBodyFieldsErrors,

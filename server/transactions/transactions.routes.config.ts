@@ -12,11 +12,11 @@ export class TransactionRoutes extends CommonRoutesConfig {
 
   configureRoutes() {
     this.app
-      .route("/transactions")
+      .route("/api/transactions")
       .get(transactionsController.listTransactions);
 
     this.app.post(
-      `/transaction`,
+      `/api/transaction`,
       body("payee_id").notEmpty().isString(),
       body("account_id").notEmpty().isString(),
       body("category_id").notEmpty().isString(),
@@ -30,7 +30,7 @@ export class TransactionRoutes extends CommonRoutesConfig {
     );
 
     this.app
-      .route(`/transactions/:transactionId`)
+      .route(`/api/transactions/:transactionId`)
       .put(transactionsController.updateTransaction);
 
     return this.app;
